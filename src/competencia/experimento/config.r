@@ -8,6 +8,7 @@ PATH_BASE       <- paste0("/home/", USER, "/dmeyf2025")
 PATH_BUCKET     <- paste0("/home/", USER, "/buckets/b1")
 PATH_DATASETS   <- paste0(PATH_BUCKET, "/datasets")
 PATH_OUTPUTS    <- paste0(PATH_BUCKET, "/outputs")
+PATH_EXPS <- paste0(PATH_BUCKET, "/exp")
 PATH_EXPERIMENT <- paste0(PATH_BASE, "/src/competencia/experimento")
 PATH_UTILS <- paste0(PATH_EXPERIMENT, "/utils/index.R")
 
