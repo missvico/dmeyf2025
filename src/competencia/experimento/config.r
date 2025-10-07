@@ -13,7 +13,8 @@ PATH_UTILS <- paste0(PATH_EXPERIMENT, "/utils/index.R")
 
 # Variables de proyecto
 DATASET_CRUDO   <- paste0(PATH_DATASETS, "/competencia_01_crudo.csv")
-DATASET_ <- paste0(PATH_BUCKET, "/competencia_01.csv")
+DATASET_CLASE <- paste0(PATH_DATASETS, "/competencia_01.csv.gz")
+DATASET_FEATURES <- paste0(PATH_DATASETS, "/competencia_01_features.csv.gz")
 
 # Parámetros del modelo
 SEEDS            <- 42
