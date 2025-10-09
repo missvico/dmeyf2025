@@ -1,6 +1,6 @@
 library(lightgbm)
 library(data.table)
-source("/home/vickydiliscia/dmeyf2025/src/competencia/experimento/utils/05_realidad_inicializar.R")
+source("/home/vickydiliscia/dmeyf2025/src/competencia/experimento/utils/06_realidad_inicializar.R")
 
 
 ensamblar_promedio <- function(dataset,
@@ -34,7 +34,7 @@ ensamblar_promedio <- function(dataset,
 
   # Cargar modelos y predecir
   modelos <- lapply(model_paths, lgb.load)
-  predicciones_mat <- sapply(modelos, function(m) predict(m, data = X))
+  predicciones_mat <- sapply(modelos, function(m) predict(m, newdata = X))
 
   # Promedio fila a fila
   prediccion <- rowMeans(predicciones_mat)
@@ -45,6 +45,8 @@ ensamblar_promedio <- function(dataset,
   # 3) Tabla de predicción
   tb_prediccion <- dfuture[, .(numero_de_cliente, foto_mes)]
   tb_prediccion[, prob := prediccion]
+  
+  if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
 
   # 4) Construyo nombre de archivo usando el experimento
   out_file <- file.path(out_dir, paste0("prediccion_", experimento, ".txt"))
