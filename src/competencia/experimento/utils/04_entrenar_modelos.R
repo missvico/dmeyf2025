@@ -1,6 +1,4 @@
-entrenar_modelos <- function(dataset_train, params, nrounds, seeds, tag = "exp") {
-
-
+entrenar_modelos <- function(dtrain, params, nrounds, seeds, tag = "exp") {
     
   stopifnot(is.list(params), length(seeds) > 0)
   
