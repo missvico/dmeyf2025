@@ -8,7 +8,7 @@ particionar <- function(data, division, agrupa= "", campo= "fold", start= 1, see
 }
 
 # iniciliazo el dataset de realidad, para medir ganancia
-realidad_inicializar <- function( pfuture, PARAM) {
+realidad_inicializar <- function( pfuture, pparam) {
 
   # datos para verificar la ganancia
   drealidad <- pfuture[, list(numero_de_cliente, foto_mes, clase_ternaria)]
@@ -16,7 +16,7 @@ realidad_inicializar <- function( pfuture, PARAM) {
   particionar(drealidad,
     division= c(3, 7),
     agrupa= "clase_ternaria",
-    seed= PARAM$semilla_kaggle
+    seed= pparam$semilla_kaggle
   )
 
   return( drealidad )
