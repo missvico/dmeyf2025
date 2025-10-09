@@ -1,4 +1,4 @@
-library(lightgbm)
+flibrary(lightgbm)
 library(data.table)
 source("/home/vickydiliscia/dmeyf2025/src/competencia/experimento/utils/06_realidad_inicializar.R")
 
