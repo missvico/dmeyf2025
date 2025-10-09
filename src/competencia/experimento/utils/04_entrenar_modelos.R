@@ -1,4 +1,7 @@
-entrenar_modelos <- function(dtrain, params, nrounds, seeds, tag = "exp") {
+entrenar_modelos <- function(dataset_train, params, nrounds, seeds, tag = "exp") {
+
+
+    
   stopifnot(is.list(params), length(seeds) > 0)
   
   out_dir <- getwd()
@@ -33,63 +36,49 @@ entrenar_modelos <- function(dtrain, params, nrounds, seeds, tag = "exp") {
   invisible(modelos)
 }
 
-
-library(parallel)
 library(lightgbm)
+library(data.table)
 
-entrenar_modelos_paralelos <- function(
-  dtrain,
-  params,
-  nrounds,
-  seeds,
-  tag = "exp",
-  workers = 2,             # <-- 2 procesos en paralelo
-  threads_per_worker = 4   # <-- 4 hilos LightGBM por proceso
-) {
-  stopifnot(is.list(params), length(seeds) > 0)
-  params$num_threads <- threads_per_worker
+entrenar_modelos_paralelos <- function(dtrain, params, nrounds, seeds, tag="exp") {
+  resultados <- vector("list", length(seeds))
+  names(resultados) <- as.character(seeds)
+  t_all0 <- Sys.time()
 
-  # función interna: entrena y guarda un modelo por semilla
-  train_one <- function(s, dtrain, params, nrounds, tag) {
+  # asegurar paralelismo interno máximo
+  params$num_threads <- 8  
+
+  # construir dataset solo una vez para eficiencia
+  lgb.Dataset.construct(dtrain)
+
+  for (i in seq_along(seeds)) {
+    s <- seeds[i]
+    cat(sprintf("[%s] seed %d → inicio\n", format(Sys.time(), "%H:%M:%S"), s))
     t0 <- Sys.time()
-    param_i <- modifyList(params, list(seed = s))
-    booster <- lgb.train(
+
+    # insertar semilla específica
+    p_i <- modifyList(params, list(seed = s))
+
+    # entrenar modelo
+    m <- lgb.train(
       data    = dtrain,
-      params  = param_i,
+      params  = p_i,
       nrounds = nrounds,
       verbose = -1
     )
-    fname <- sprintf("modelo_%s_seed%d.txt", tag, s)
-    lgb.save(booster, fname)
-    t1 <- Sys.time()
-    list(
-      seed  = s,
-      path  = file.path(getwd(), fname),
-      secs  = as.numeric(difftime(t1, t0, units = "secs"))
-    )
+
+    # guardar modelo
+    fn <- sprintf("modelo_%s_seed%d.txt", tag, s)
+    lgb.save(m, fn)
+
+    # logging de tiempos
+    secs <- as.numeric(difftime(Sys.time(), t0, units="secs"))
+    cat(sprintf("[%s] seed %d → fin (%.1f s) | guardado en %s\n",
+                format(Sys.time(), "%H:%M:%S"), s, secs, fn))
+
+    resultados[[i]] <- list(seed = s, path = file.path(getwd(), fn), secs = secs)
   }
 
-  seeds <- as.integer(seeds)
-  message(sprintf(">> Lanzando %d workers; %d hilos LGBM por worker", workers, threads_per_worker))
-
-  if (.Platform$OS.type == "unix") {
-    res <- mclapply(
-      X = seeds,
-      FUN = function(s) train_one(s, dtrain, params, nrounds, tag),
-      mc.cores = workers
-    )
-  } else {
-    cl <- makeCluster(workers)
-    on.exit(stopCluster(cl), add = TRUE)
-    # exportar objetos y paquetes
-    clusterExport(cl, varlist = c("dtrain","params","nrounds","tag","train_one"), envir = environment())
-    clusterEvalQ(cl, { library(lightgbm) })
-    res <- parLapply(cl, seeds, function(s) train_one(s, dtrain, params, nrounds, tag))
-  }
-
-  # logging final
-  secs <- vapply(res, function(x) x$secs, numeric(1))
-  message(sprintf(">> Tiempo por semilla (mediana): %.1f s | Total CPU ~ %.1f s",
-                  median(secs), sum(secs)))
-  invisible(res)
+  cat(sprintf("[TOTAL] %.1f s\n", as.numeric(difftime(Sys.time(), t_all0, units="secs"))))
+  invisible(resultados)
 }
+
