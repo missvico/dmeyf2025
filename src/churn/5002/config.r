@@ -12,18 +12,19 @@ PATH_BASE       <- paste0("/home/", USER, "/dmeyf2025")
 PATH_BUCKET     <- paste0("/home/", USER, "/buckets/b1")
 PATH_DATASETS   <- paste0(PATH_BUCKET, "/datasets")
 PATH_OUTPUTS    <- paste0(PATH_BUCKET, "/outputs")
+PATH_EXPERIMENTS    <- paste0(PATH_BUCKET, "/exp")
 
 PATH_CHURN <- paste0(PATH_BASE, "/src/churn")
 PATH_UTILS <- paste0(PATH_CHURN, "/utils")
 
 PATH_EXP_CODE <- paste0(PATH_BASE, "/src/churn", EXPERIMENT)
-PATH_EXP_BUCKET <- paste0(PATH_BUCKET, EXPERIMENT_FOLDER)
+PATH_THIS_EXPERIMENT <- paste0(PATH_EXPERIMENTS, "/", EXPERIMENT_FOLDER)
 
 # Resultados
-PATH_BO <- paste0(PATH_EXP_BUCKET, " /optimization")
-PATH_MODELS <- paste0(PATH_EXP_BUCKET, " /models")
-PATH_PREDICTION <- paste0(PATH_EXP_BUCKET, " /prediction")
-PATH_KAGGLE <- paste0(PATH_EXP_BUCKET, " /kaggle")
+PATH_BO <- paste0(PATH_THIS_EXPERIMENT, "/optimization")
+PATH_MODELS <- paste0(PATH_THIS_EXPERIMENT, " /models")
+PATH_PREDICTION <- paste0(PATH_THIS_EXPERIMENT, " /prediction")
+PATH_KAGGLE <- paste0(PATH_THIS_EXPERIMENT, " /kaggle")
 
 
 # Variables de base de datos
