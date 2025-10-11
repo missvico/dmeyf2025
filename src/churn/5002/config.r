@@ -6,6 +6,12 @@ USER <- "vickydiliscia"
 # Usuario actual (por si cambia el entorno)
 EXPERIMENT <- "5002"
 EXPERIMENT_FOLDER  <- "EXP5002" 
+UNDERSAMPLING <- 0.1
+LAGS <- 2
+
+EXPERIMENT_FOLDER  <- paste0("EXP", EXPERIMENT)
+us_pct <- round(UNDERSAMPLING * 100)   # 0.1 -> 10
+TAG    <- sprintf("%s_lag%d_us%02d", EXPERIMENT, LAGS, us_pct)
 
 # Paths principales
 PATH_BASE       <- paste0("/home/", USER, "/dmeyf2025")
@@ -22,9 +28,9 @@ PATH_THIS_EXPERIMENT <- paste0(PATH_EXPERIMENTS, "/", EXPERIMENT_FOLDER)
 
 # Resultados
 PATH_BO <- paste0(PATH_THIS_EXPERIMENT, "/optimization")
-PATH_MODELS <- paste0(PATH_THIS_EXPERIMENT, " /models")
+PATH_MODELS <- paste0(PATH_THIS_EXPERIMENT, "/models")
 PATH_PREDICTION <- paste0(PATH_THIS_EXPERIMENT, " /prediction")
-PATH_KAGGLE <- paste0(PATH_THIS_EXPERIMENT, " /kaggle")
+PATH_KAGGLE <- paste0(PATH_THIS_EXPERIMENT, "/kaggle")
 
 
 # Variables de base de datos
