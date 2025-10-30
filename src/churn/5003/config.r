@@ -13,9 +13,10 @@ EXPERIMENT_FOLDER  <- paste0("EXP", EXPERIMENT)
 us_pct <- round(UNDERSAMPLING * 100)   # 0.1 -> 10
 TAG    <- sprintf("%s_lag%d_us%02d", EXPERIMENT, LAGS, us_pct)
 
+
 # Paths principales
 PATH_BASE       <- paste0("/home/", USER, "/dmeyf2025")
-PATH_BUCKET     <- paste0("/home/", USER, "/buckets/b1")
+PATH_BUCKET     <- paste0("/home/", USER, "/buckets/b2")
 PATH_DATASETS   <- paste0(PATH_BUCKET, "/datasets")
 PATH_OUTPUTS    <- paste0(PATH_BUCKET, "/outputs")
 PATH_EXPERIMENTS    <- paste0(PATH_BUCKET, "/exp")
@@ -33,7 +34,6 @@ PATH_TEST_MODELS <- paste0(PATH_THIS_EXPERIMENT, "/test_models")
 PATH_PREDICTION <- paste0(PATH_THIS_EXPERIMENT, "/prediction")
 PATH_TEST_PREDICTION <- paste0(PATH_THIS_EXPERIMENT, "/test_prediction")
 PATH_KAGGLE <- paste0(PATH_THIS_EXPERIMENT, "/kaggle")
-
 
 # Variables de base de datos
 DATASET_CRUDO   <- paste0(PATH_DATASETS, "/competencia_01_crudo.csv")
