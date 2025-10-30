@@ -5,3 +5,5 @@ def lgb_gan_eval(y_pred, data):
     ganancia = np.cumsum(ganancia)
 
     return 'gan_eval', np.max(ganancia) , True
+
+__all__ = ["lgb_gan_eval"]

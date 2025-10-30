@@ -21,3 +21,5 @@ def write_polar_gz(dataset,path_target):
     with gzip.open(path_target, "wt", encoding="utf-8") as f:
         dataset.write_csv(f)
     return
+
+__all__ = ["write_polar_gz", "read_polar"]

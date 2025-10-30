@@ -26,3 +26,5 @@ def undersampling_experimento(dataset,undersampling,train_months,seed):
     print(dataset.select(pl.col("training")).to_series().value_counts())
     print(dataset.group_by(["training", "clase_ternaria"]).len().sort("training"))
     return dataset
+
+__all__ = ["undersampling_experimento"]

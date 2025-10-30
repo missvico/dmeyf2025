@@ -25,22 +25,21 @@ PATH_DATASETS = f"{PATH_BUCKET}/datasets"
 PATH_OUTPUTS = f"{PATH_BUCKET}/outputs"
 PATH_EXPERIMENTS = f"{PATH_BUCKET}/exp"
 
-PATH_CHURN = f"{PATH_BASE}/src/churn"
-PATH_UTILS = f"{PATH_CHURN}/utils"
-
-PATH_EXP_CODE = f"{PATH_BASE}/src/churn{EXPERIMENT}"
-PATH_THIS_EXPERIMENT = f"{PATH_EXPERIMENTS}/{EXPERIMENT_FOLDER}"
+PATH_REPO = f"{PATH_BASE}/src/experimentos"
+PATH_UTILS = f"{PATH_REPO}/utils"
+PATH_CODE = f"{PATH_BASE}/src/churn/{EXPERIMENT}"
 
 # =====================================
 # Resultados
 # =====================================
 
-PATH_BO = f"{PATH_THIS_EXPERIMENT}/optimization"
-PATH_MODELS = f"{PATH_THIS_EXPERIMENT}/models"
-PATH_TEST_MODELS = f"{PATH_THIS_EXPERIMENT}/test_models"
-PATH_PREDICTION = f"{PATH_THIS_EXPERIMENT}/prediction"
-PATH_TEST_PREDICTION = f"{PATH_THIS_EXPERIMENT}/test_prediction"
-PATH_KAGGLE = f"{PATH_THIS_EXPERIMENT}/kaggle"
+PATH_RESULTS = f"{PATH_EXPERIMENTS}/{EXPERIMENT_FOLDER}"
+PATH_BO = f"{PATH_RESULTS}/optimization"
+PATH_MODELS = f"{PATH_RESULTS}/models"
+PATH_TEST_MODELS = f"{PATH_RESULTS}/test_models"
+PATH_PREDICTION = f"{PATH_RESULTS}/prediction"
+PATH_TEST_PREDICTION = f"{PATH_RESULTS}/test_prediction"
+PATH_KAGGLE = f"{PATH_RESULTS}/kaggle"
 
 # =====================================
 # Datasets

@@ -113,7 +113,7 @@ def generar_delta_lags(dataset):
     print(f"Lags/deltas agregados: {len(fe_cols)*2}")
     return dataset
 
-def convertirpercentil(dataset):
+def convertir_percentil(dataset):
     # --- 1️⃣ Ordenar por fecha y cliente
     dataset = dataset.sort(["foto_mes", "numero_de_cliente"])
     
@@ -151,3 +151,6 @@ def convertirpercentil(dataset):
     
     print(f"\nTotal columnas convertidas: {len(num_cols)}")
     return dataset
+
+
+__all__ = ["generar_ternaria", "generar_columna_target", "generar_delta_lags", "convertir_percentil"]
