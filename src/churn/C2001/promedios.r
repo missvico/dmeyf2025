@@ -1,6 +1,6 @@
 promedios <- list(
-  pplazofijo_total = c("m_plazofijo_total","cplazo_fijo"),
-  pinversion_total = c("m_inversion1_total","cinversion1"),
+  pplazofijo_total = c("mplazofijo_total","cplazo_fijo"),
+  pinversion_total = c("minversion1_total","cinversion1"),
   pcaja_ahorro     = c("mcaja_ahorro","ccaja_ahorro"),
   ptarjeta_visa_consumo_por_transaccion   = c("mtarjeta_visa_consumo","ctarjeta_visa_transacciones"),
   ptarjeta_master_consumo_por_transaccion = c("mtarjeta_master_consumo","ctarjeta_master_transacciones"),
