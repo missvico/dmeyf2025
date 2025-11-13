@@ -10,6 +10,7 @@ paths$experiments     <- paste0(paths$bucket, "/exp")
 
 paths$churn     <- paste0(paths$base, "/src/churn")
 paths$script <- paste0(paths$churn, "/", paths$scriptfolder)
+paths$specsumas <- paste0(paths$churn, "/", paths$scriptfolder, "/featurespecs/spec_sumas.csv")
 
 # Paths Input
 paths$datasets   <- paste0(paths$bucket, "/datasets")
