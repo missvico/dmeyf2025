@@ -1,7 +1,7 @@
 paths <- list()
 
 # Paths Base
-paths$experimento <- "APO2010-202106""
+paths$experimento <- "APO2010-202106"
 paths$scriptfolder <- "C2010"
 paths$user <- "vickydiliscia"
 paths$base <- paste0("/home/", paths$user, "/dmeyf2025")
