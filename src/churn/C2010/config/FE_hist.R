@@ -1,9 +1,9 @@
 FE_hist<- list()
 
-FE_hist$Lags$run <- TRUE
+FE_hist$Lags$Run <- TRUE
 FE_hist$Lags$Order <- c(1,2)
 
-FE_hist$DeltaLags$run <- TRUE
+FE_hist$DeltaLags$Run <- TRUE
 FE_hist$DeltaLags$Order <- c(1,2)
 
 # parametros de Feature Engineering Historico de Tendencias
