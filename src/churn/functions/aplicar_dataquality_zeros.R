@@ -24,7 +24,7 @@ aplicar_dataquality_zeros <- function(dataset,
   modo <- match.arg(modo)
 
   if (modo == "interpolar") {
-    # 👉 MISMO input (named list var -> meses) si tu función lo acepta así
+
     dataset <- interpolar_faltantes(
       dataset,
       variables        = variables_rotas,
