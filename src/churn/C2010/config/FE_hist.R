@@ -1,3 +1,10 @@
+util <- list()
+
+util$user <- "vickydiliscia"
+util$scriptfolder <- "C2010"
+util$base <- paste0("/home/", paths$user, "/dmeyf2025")
+util$churn <- paste0(paths$base, "/src/churn")
+
 FE_hist<- list()
 
 FE_hist$Lags$Run <- TRUE
@@ -5,6 +12,7 @@ FE_hist$Lags$Order <- c(1,2)
 
 FE_hist$DeltaLags$Run <- TRUE
 FE_hist$DeltaLags$Order <- c(1,2)
+FE_hist$spechistoricas <- paste0(util$churn, "/", util$scriptfolder, "/featurespecs/spec_historicas.csv")
 
 # parametros de Feature Engineering Historico de Tendencias
 FE_hist$Tendencias$run <- TRUE

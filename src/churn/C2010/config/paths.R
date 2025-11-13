@@ -6,7 +6,7 @@ paths$scriptfolder <- "C2010"
 paths$user <- "vickydiliscia"
 paths$base <- paste0("/home/", paths$user, "/dmeyf2025")
 paths$bucket <- paste0("/home/", paths$user, "/buckets/b1")
-paths$experiments     <- paste0(paths$bucket, "/exp")
+paths$experiments   <- paste0(paths$bucket, "/exp")
 
 paths$churn     <- paste0(paths$base, "/src/churn")
 paths$script <- paste0(paths$churn, "/", paths$scriptfolder)
