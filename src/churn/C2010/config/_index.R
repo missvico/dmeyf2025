@@ -6,7 +6,7 @@ base_path <- file.path("/home", user, "dmeyf2025", "src", "churn", folder, "conf
 
 # Lista de módulos a cargar
 modules <- c("paths.R", "dataquality.R", "lgbm.R", "experiment.R", 
-             "trainingstrategy.R", "features.R")
+             "trainingstrategy.R", "features.R", "FE_rf.R", "FE_intrames.R")
 
 # Cargar cada uno con control de existencia
 for (mod in modules) {
@@ -29,6 +29,9 @@ PARAM$features <- features
 PARAM$user <- user
 PARAM$experimento <- experimento
 PARAM$folder <- folder
+PARAM$FE_rf <- FE_rf
+PARAM$FE_hist <- FE_hist
+PARAM$FE_intrames <- FE_intrames
 
 PARAM$semilla_primigenia <- 100271
 
