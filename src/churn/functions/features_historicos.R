@@ -191,7 +191,7 @@ library(data.table)
 # Dispatcher principal
 # =========================
 
-apply_rolling_from_specs <- function(dt,
+apply_rolling_from_specs_v1 <- function(dt,
                                      specs,
                                      id_col   = "numero_de_cliente",
                                      time_col = "foto_mes",
@@ -293,7 +293,7 @@ apply_rolling_from_specs <- function(dt,
 # Dispatcher eficiente
 # =========================
 
-apply_rolling_from_specs_eficiente <- function(dt,
+apply_rolling_from_specs <- function(dt,
                                      specs,
                                      id_col   = "numero_de_cliente",
                                      time_col = "foto_mes",

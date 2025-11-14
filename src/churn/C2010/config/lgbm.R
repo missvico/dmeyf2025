@@ -8,8 +8,6 @@ lgbm <-  list(
   force_row_wise= TRUE,
   verbosity= -100,
 
-  seed= PARAM$semilla_primigenia,
-
   max_bin= 31L,
   min_data_in_leaf= 20L,  #este ya es el valor default de LightGBM
 

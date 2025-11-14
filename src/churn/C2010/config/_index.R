@@ -37,6 +37,7 @@ PARAM$FE_hist <- FE_hist
 PARAM$FE_intrames <- FE_intrames
 
 PARAM$semilla_primigenia <- 100271
+PARAM$lgbm$seed <- PARAM$semilla_primigenia
 
 # 🔹 Exportar al global env para uso directo
 assign("PARAM", PARAM, envir = .GlobalEnv)
