@@ -79,6 +79,30 @@ roll_quantile_by <- function(dt, var, id_col, time_col, win, q = 0.9, suffix = "
   invisible(dt)
 }
 
+roll_ratioavg_by <- function(dt, var, id_col, time_col, win,
+                             suffix = "m", min_obs = 1) {
+  setorderv(dt, c(id_col, time_col))
+  
+  # Nombre de la columna de promedio rolling
+  mean_col <- .make_name(var, "mean", win, suffix)
+  
+  # Si el promedio todavía no existe, lo calculamos
+  if (!mean_col %in% names(dt)) {
+    roll_mean_by(dt, var, id_col, time_col, win, suffix, min_obs)
+  }
+  
+  # Nombre de salida: var__ratioavg_6m
+  newn <- .make_name(var, "ratioavg", win, suffix)
+  
+  dt[, (newn) :=
+        fifelse(get(mean_col) %in% c(NA_real_, 0),
+                NA_real_,
+                get(var) / get(mean_col))]
+  
+  invisible(dt)
+}
+
+
 # =========================
 # Proporciones / frecuencias (flags o umbrales)
 # =========================
@@ -252,12 +276,19 @@ apply_rolling_from_specs <- function(dt,
       } else if (op == "max_streak_gt0") {
         roll_max_streak_gt0_by(dt, var, id_col, time_col, win, suffix, min_obs)
 
+      } else if {
+        warning(sprintf("Operación '%s' no reconocida para variable '%s'; se omite.",
+                        op, var))
+
+      # 🔹 Nuevo: ratio contra el promedio rolling
+      } else if (op == "ratioavg") {
+        roll_ratioavg_by(dt, var, id_col, time_col, win, suffix, min_obs)
+
       } else {
         warning(sprintf("Operación '%s' no reconocida para variable '%s'; se omite.",
                         op, var))
       }
     }
   }
-
   dt
 }
