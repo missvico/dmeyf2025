@@ -276,10 +276,6 @@ apply_rolling_from_specs <- function(dt,
       } else if (op == "max_streak_gt0") {
         roll_max_streak_gt0_by(dt, var, id_col, time_col, win, suffix, min_obs)
 
-      } else if {
-        warning(sprintf("Operación '%s' no reconocida para variable '%s'; se omite.",
-                        op, var))
-
       # 🔹 Nuevo: ratio contra el promedio rolling
       } else if (op == "ratioavg") {
         roll_ratioavg_by(dt, var, id_col, time_col, win, suffix, min_obs)
