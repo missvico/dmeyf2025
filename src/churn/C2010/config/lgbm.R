@@ -9,7 +9,7 @@ lgbm <-  list(
   verbosity= -100,
 
   max_bin= 31L,
-  min_data_in_leaf= 20L,  #este ya es el valor default de LightGBM
+  min_data_in_leaf= 100L,  #este ya es el valor default de LightGBM
 
   num_iterations= 9999L, # dejo libre la cantidad de arboles, zLightGBM se detiene solo
   num_leaves= 999L, # dejo libre la cantidad de hojas, zLightGBM sabe cuando no hacer un split
@@ -17,6 +17,6 @@ lgbm <-  list(
     
   feature_fraction= 0.50, # un valor equilibrado, habra que probar alternativas ...
     
-  canaritos= 100, # fundamental en zLightGBM, aqui esta el control del overfitting
-  gradient_bound= 0.1  # default de zLightGBM
+  canaritos= 5, # fundamental en zLightGBM, aqui esta el control del overfitting
+  gradient_bound= 0.01  # default de zLightGBM
 )
