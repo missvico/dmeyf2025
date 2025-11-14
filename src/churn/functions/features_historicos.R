@@ -288,3 +288,194 @@ apply_rolling_from_specs <- function(dt,
   }
   dt
 }
+
+# =========================
+# Dispatcher eficiente
+# =========================
+
+apply_rolling_from_specs_eficiente <- function(dt,
+                                     specs,
+                                     id_col   = "numero_de_cliente",
+                                     time_col = "foto_mes",
+                                     suffix   = "m",
+                                     min_obs  = 1) {
+  stopifnot(is.data.table(dt))
+
+  # Aseguro que specs sea data.table
+  if (!is.data.table(specs)) specs <- as.data.table(specs)
+
+  # Normalizaciones básicas
+  if (!"active" %in% names(specs)) {
+    specs[, active := TRUE]
+  } else {
+    specs[, active := as.logical(active)]
+  }
+
+  if (!"ops" %in% names(specs)) {
+    stop("El objeto specs debe tener una columna 'ops'")
+  }
+  if (!"var" %in% names(specs) || !"win" %in% names(specs)) {
+    stop("El objeto specs debe tener columnas 'var' y 'win'")
+  }
+
+  # 🔹 Ordenar UNA sola vez por id + tiempo
+  setorderv(dt, c(id_col, time_col))
+
+  # Recorro cada fila de specs
+  for (i in seq_len(nrow(specs))) {
+    if (!isTRUE(specs$active[i])) next
+
+    var <- specs$var[i]
+    win <- as.integer(specs$win[i])
+    ops_str <- specs$ops[i]
+
+    if (is.na(ops_str) || ops_str == "") next
+
+    ops <- strsplit(ops_str, ",")[[1]]
+    ops <- trimws(ops)
+
+    message(sprintf("Variable: %s | win: %d | ops: %s",
+                    var, win, paste(ops, collapse = ", ")))
+
+    for (op in ops) {
+
+      # -----------------------------------------
+      # Mapeo de ops -> funciones / cálculos
+      # con REUSO de columnas ya creadas
+      # -----------------------------------------
+
+      if (op == "mean") {
+        mean_col <- .make_name(var, "mean", win, suffix)
+        if (!mean_col %in% names(dt)) {
+          roll_mean_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+      } else if (op == "sum") {
+        sum_col <- .make_name(var, "sum", win, suffix)
+        if (!sum_col %in% names(dt)) {
+          roll_sum_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+      } else if (op == "sd") {
+        sd_col <- .make_name(var, "sd", win, suffix)
+        if (!sd_col %in% names(dt)) {
+          roll_sd_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+      } else if (op == "cv") {
+        # cv = sd / mean, reusando columnas si existen
+        mean_col <- .make_name(var, "mean", win, suffix)
+        sd_col   <- .make_name(var, "sd",   win, suffix)
+        cv_col   <- .make_name(var, "cv",   win, suffix)
+
+        if (!mean_col %in% names(dt)) {
+          roll_mean_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+        if (!sd_col %in% names(dt)) {
+          roll_sd_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+        if (!cv_col %in% names(dt)) {
+          dt[, (cv_col) :=
+                fifelse(is.na(get(mean_col)) | get(mean_col) == 0,
+                        NA_real_,
+                        get(sd_col) / get(mean_col))]
+        }
+
+      } else if (op == "range") {
+        # range = max - min, reusando max/min si existen
+        max_col   <- .make_name(var, "max",   win, suffix)
+        min_col   <- .make_name(var, "min",   win, suffix)
+        range_col <- .make_name(var, "range", win, suffix)
+
+        if (!max_col %in% names(dt)) {
+          roll_max_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+        if (!min_col %in% names(dt)) {
+          roll_min_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+        if (!range_col %in% names(dt)) {
+          dt[, (range_col) := get(max_col) - get(min_col)]
+        }
+
+      # Cuantiles tipo p90, p75, p10, etc.
+      } else if (grepl("^p[0-9]+$", op)) {
+        q_num <- as.numeric(sub("p", "", op))
+        q <- q_num / 100
+
+        tag       <- paste0("p", q_num)
+        quant_col <- .make_name(var, tag, win, suffix)
+
+        if (!quant_col %in% names(dt)) {
+          roll_quantile_by(dt, var, id_col, time_col, win,
+                           q = q, suffix = suffix, min_obs = min_obs)
+        }
+
+      # Proporciones
+      } else if (op == "prop_gt0") {
+        prop_col <- .make_name(var, "prop_gt0", win, suffix)
+        if (!prop_col %in% names(dt)) {
+          roll_prop_gt0_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+      } else if (op == "prop_eq0") {
+        prop_col <- .make_name(var, "prop_eq0", win, suffix)
+        if (!prop_col %in% names(dt)) {
+          roll_prop_eq0_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+      # Ejemplo: prop_below_p25, prop_below_p10, etc.
+      } else if (grepl("^prop_below_p[0-9]+$", op)) {
+        q_num <- as.numeric(sub("prop_below_p", "", op))
+        q <- q_num / 100
+
+        q_tag   <- paste0("p", q_num)
+        q_col   <- .make_name(var, q_tag, win, suffix)
+        propcol <- .make_name(var, paste0("prop_below_p", q_num), win, suffix)
+
+        # Aseguro el cuantíl rolling previo
+        if (!q_col %in% names(dt)) {
+          roll_quantile_by(dt, var, id_col, time_col, win,
+                           q = q, suffix = suffix, min_obs = min_obs)
+        }
+
+        if (!propcol %in% names(dt)) {
+          dt[, (propcol) :=
+                frollmean(as.integer(get(var) < get(q_col)),
+                          n = win, align = "right", na.rm = TRUE),
+             by = c(id_col)]
+        }
+
+      # Streaks
+      } else if (op == "max_streak_gt0") {
+        streak_col <- .make_name(var, "max_streak_gt0", win, suffix)
+        if (!streak_col %in% names(dt)) {
+          roll_max_streak_gt0_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+      # 🔹 Nuevo: ratio contra el promedio rolling
+      } else if (op == "ratioavg") {
+        mean_col      <- .make_name(var, "mean",     win, suffix)
+        ratioavg_col  <- .make_name(var, "ratioavg", win, suffix)
+
+        # Aseguro mean rolling
+        if (!mean_col %in% names(dt)) {
+          roll_mean_by(dt, var, id_col, time_col, win, suffix, min_obs)
+        }
+
+        if (!ratioavg_col %in% names(dt)) {
+          dt[, (ratioavg_col) :=
+                fifelse(get(mean_col) %in% c(NA_real_, 0),
+                        NA_real_,
+                        get(var) / get(mean_col))]
+        }
+
+      } else {
+        warning(sprintf("Operación '%s' no reconocida para variable '%s'; se omite.",
+                        op, var))
+      }
+    }
+  }
+
+  dt
+}
+
