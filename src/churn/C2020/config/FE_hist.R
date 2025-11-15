@@ -12,7 +12,7 @@ FE_hist$Lags$Order <- c(1,2)
 
 FE_hist$DeltaLags$Run <- TRUE
 FE_hist$DeltaLags$Order <- c(1,2)
-FE_hist$spechistoricas <- paste0(util$churn, "/", util$scriptfolder, "/featurespecs/spec_historicas.csv")
+FE_hist$spechistoricas <- paste0(util$churn, "/", util$scriptfolder, "/feature_specs/spec_historicas.txt")
 
 # parametros de Feature Engineering Historico de Tendencias
 FE_hist$Tendencias$run <- TRUE
