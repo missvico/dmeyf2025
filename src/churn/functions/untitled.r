@@ -48,4 +48,3 @@ deflactar_por_ipc <- function(dt,
 
   dt[]
 }
-
