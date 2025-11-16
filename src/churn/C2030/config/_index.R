@@ -7,7 +7,7 @@ base_path <- file.path("/home", user, "dmeyf2025", "src", "churn", folder, "conf
 # Lista de módulos a cargar
 modules <- c("paths.R", "dataquality.R", "lgbm.R", "experiment.R", 
              "trainingstrategy.R", "features.R", "FE_rf.R", "FE_intrames.R" ,"FE_hist.R",
-             "trainfinal.R"
+             "trainfinal.R", "trainentrega.R"
             )
 
 # Cargar cada uno con control de existencia
@@ -28,6 +28,8 @@ PARAM$lgbm <- lgbm
 PARAM$experiment <- experiment
 PARAM$trainingstrategy <- trainingstrategy
 PARAM$train_final <- train_final
+PARAM$train_entrega <- train_entrega
+
 PARAM$features <- features 
 PARAM$user <- user
 PARAM$experimento <- experimento
