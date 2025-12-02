@@ -9,7 +9,7 @@ FE_hist<- list()
 
 FE_hist$Ipc$Run <- TRUE
 FE_hist$Lags$Run <- TRUE
-FE_hist$Lags$Order <- c(1,2,3)
+FE_hist$Lags$Order <- c(1,2,3,6,12)
 
 FE_hist$DeltaLags$Run <- TRUE
 FE_hist$DeltaLags$Order <- c(1,2,3)
