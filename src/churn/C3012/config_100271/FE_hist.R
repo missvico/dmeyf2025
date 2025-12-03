@@ -9,10 +9,10 @@ FE_hist<- list()
 
 FE_hist$Ipc$Run <- TRUE
 FE_hist$Lags$Run <- TRUE
-FE_hist$Lags$Order <- c(1,2)
+FE_hist$Lags$Order <- c(1,2,3,6,12)
 
 FE_hist$DeltaLags$Run <- TRUE
-FE_hist$DeltaLags$Order <- c(1,2)
+FE_hist$DeltaLags$Order <- c(1,2,3,6,12)
 FE_hist$spechistoricas <- paste0(util$churn, "/", util$scriptfolder, "/feature_specs/spec_historicas.txt")
 
 FE_hist$specsipc <- paste0(util$churn, "/", util$scriptfolder, "/feature_specs/ipc.txt")
