@@ -2,7 +2,7 @@ folder <- "C3002"
 experimento <- "APO3002-202107_100271"
 user <- "vickydiliscia"
 
-base_path <- file.path("/home", user, "dmeyf2025", "src", "churn", folder, "config")
+base_path <- file.path("/home", user, "dmeyf2025", "src", "churn", folder, "config_100271")
 
 # Lista de módulos a cargar
 modules <- c("paths.R", "dataquality.R", "lgbm.R", "experiment.R", 
