@@ -1,0 +1,23 @@
+new_var,inputs,active
+mtarjeta_total_consumo,"mtarjeta_visa_consumo, mtarjeta_master_consumo",TRUE
+mtarjeta_total_debitos_automaticos,"mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos",TRUE
+mfinanciacionlimite_total,"Master_mfinanciacion_limite, Visa_mfinanciacion_limite",TRUE
+msaldopesos_total,"Master_msaldopesos, Visa_msaldopesos",TRUE
+msaldodolares_total,"Master_msaldodolares, Visa_msaldodolares",TRUE
+mconsumopesos_total,"Master_mconsumospesos, Visa_mconsumospesos",TRUE
+mconsumodolares_total,"Master_mconsumosdolares, Visa_mconsumosdolares",TRUE
+mlimitecompra_total,"Master_mlimitecompra, Visa_mlimitecompra",TRUE
+madelantopesos_total,"Master_madelantopesos, Visa_madelantopesos",TRUE
+madelantodolares_total,"Master_madelantodolares, Visa_madelantodolares",TRUE
+mpagado_total,"Master_mpagado, Visa_mpagado",TRUE
+mpagopesos_total,"Master_mpagospesos, Visa_mpagospesos",TRUE
+mpagosdolares_total,"Master_mpagosdolares, Visa_mpagosdolares",TRUE
+msaldototal_total,"Master_msaldototal, Visa_msaldototal",TRUE
+mconsumototal_total,"Master_mconsumototal, Visa_mconsumototal",TRUE
+cconsumos_total,"Master_cconsumos, Visa_cconsumos",TRUE
+delinquency_total,"Master_delinquency, Visa_delinquency",TRUE
+mplazofijo_total,"mplazo_fijo_dolares, mplazo_fijo_pesos",TRUE
+mpayroll_total,"mpayroll, mpayroll2",TRUE
+minversion1_total,"minversion1_dolares, minversion1_pesos",TRUE
+cpayroll_total,"cpayroll_trx, cpayroll2_trx",TRUE
+cseguros_total,"cseguro_vida, cseguro_auto, cseguro_vivienda, cseguro_accidentes_personales",TRUE
